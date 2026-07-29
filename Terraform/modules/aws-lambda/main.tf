@@ -21,8 +21,7 @@ resource "aws_lambda_function" "employee_api" {
   memory_size = 512
   environment {
     variables = {
-      TABLE_NAME = var.table_name
-      ENVIRONMENT = var.environment
+      TABLE_NAME = var.dynamodb_table_name
     }
   }
   depends_on = [

@@ -1,19 +1,22 @@
-module "aws-dynomodb" {
-  source = "./modules/aws-dynomodb"
-  project_name = "employee-db"
+module "dynamodb" {
+  source = "./modules/aws-dynamodb"
+
+  project_name = var.project_name
   billing_mode = "PAY_PER_REQUEST"
-  hash_key      = "EmployeeID"
+  hash_key = "EmployeeID"
   hash_key_type = "S"
-  environment = "dev"
+  environment = var.environment
 }
 
-module "aws-iam" {
-  source             = "./modules/aws-iam"
-  project_name       = var.project_name
-  environment        = var.environment
+module "iam" {
+  source = "./modules/aws-iam"
+
+  project_name = var.project_name
+  environment = var.environment
   dynamodb_table_arn = module.dynamodb.table_arn
 }
-module "aws-lambda" {
+
+module "lambda" {
   source = "./modules/aws-lambda"
   project_name = var.project_name
   environment = var.environment
@@ -22,7 +25,7 @@ module "aws-lambda" {
   handler = var.lambda_handler
   lambda_role_arn = module.iam.lambda_role_arn
   table_name = module.dynamodb.table_name
-  source_path = "./lambda"
+  source_path = "../lambda"
 }
 
 module "aws-api-gateway" {
