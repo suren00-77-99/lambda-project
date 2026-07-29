@@ -10,7 +10,7 @@ terraform {
     bucket         = "raj67789"
     key            = "dev/terraform.tfstate"
     region         = "ap-south-1"
-    dynamodb_table = "terrafrom-lock"
+    dynamodb_table = "terraform-lock"
   }
 }
 
