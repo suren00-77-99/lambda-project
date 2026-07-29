@@ -14,12 +14,18 @@ variable "dynamodb_table_name" {
   type = string
 }
 
-variable "lambda_function_name" {}
+variable "lambda_function_name" {
+  type = string
+}
 
-variable "runtime" {}
+variable "runtime" {
+  type = string
+}
 
-variable "handler" {}
+variable "handler" {
+  type = string
+}
 
-variable "table_name" {}
-
-variable "source_path" {}
+variable "source_path" {
+  type = string
+}
