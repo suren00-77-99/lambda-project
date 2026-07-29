@@ -1,4 +1,4 @@
-resource "aws_iam_role" "this" {
+resource "aws_iam_role" "lambda_role" {
   name = "${var.project_name}-${var.environment}-lambda-role"
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -13,24 +13,81 @@ resource "aws_iam_role" "this" {
     ]
   })
 }
-resource "aws_iam_role_policy_attachment" "this" {
+###############################
+#CloudWatch Logging Policy
+################################
+resource "aws_iam_policy" "cloudwatch" {
+  name = "${var.project_name}-${var.environment}-cloudwatch"
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect = "Allow"
+        Action = [
+          "logs:CreateLogGroup",
+          "logs:CreateLogStream",
+          "logs:PutLogEvents"
+        ]
+        Resource = "*"
+      }
+    ]
+  })
+}
+###############################
+# DynamoDB Policy
+################################
+resource "aws_iam_policy" "dynamodb" {
+  name = "${var.project_name}-${var.environment}-dynamodb"
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect = "Allow"
+        Action = [
+          "dynamodb:GetItem",
+          "dynamodb:PutItem",
+          "dynamodb:UpdateItem",
+          "dynamodb:DeleteItem",
+          "dynamodb:Scan",
+          "dynamodb:Query"
+        ]
+        Resource = "*"
+      }
+    ]
+  })
+}
 
-  role = aws_iam_role.this.name
+###############################
+# SNS policy
+################################
+resource "aws_iam_policy" "sns" {
+  name = "${var.project_name}-${var.environment}-sns"
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect = "Allow"
+        Action = [
+          "sns:Publish"
+        ]
+        Resource = "*"
+      }
+    ]
+  })
+}
 
-  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+# attached policys
+resource "aws_iam_role_policy_attachment" "cloudwatch" {
+  role       = aws_iam_role.lambda_role.name
+  policy_arn = aws_iam_policy.cloudwatch.arn
 
 }
-resource "aws_iam_role_policy_attachment" "this" {
-
-  role = aws_iam_role.this.name
-
-  policy_arn = "arn:aws:iam::aws:policy/AmazonDynamoDBFullAccess"
-
+resource "aws_iam_role_policy_attachment" "dynamodb" {
+  role = aws_iam_role.lambda_role.name
+  policy_arn = aws_iam_policy.dynamodb.arn
 }
-resource "aws_iam_role_policy_attachment" "this" {
-
-  role = aws_iam_role.this.name
-
-  policy_arn = "arn:aws:iam::aws:policy/AmazonSNSFullAccess"
+resource "aws_iam_role_policy_attachment" "sns" {
+  role = aws_iam_role.lambda_role.name
+  policy_arn = aws_iam_policy.sns.arn
 
 }
