@@ -10,6 +10,20 @@ pipeline {
                 url: 'https://github.com/suren00-77-99/lambda-project.git'
             }
         }
+        stage('Install Dependencies') {
+            steps {
+                sh '''
+                python3 -m pip install --upgrade pip
+                pip3 install pytest
+                '''
+            }
+        }
+
+        stage('Run Tests') {
+            steps {
+                sh 'pytest'
+            }
+        }
 
         stage('Terraform Init') {
             steps {
