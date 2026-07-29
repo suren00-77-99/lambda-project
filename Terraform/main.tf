@@ -34,7 +34,6 @@ module "aws-api-gateway" {
 }
 
 module "aws-sns" {
-
   source = "./modules/aws-sns"
   project_name = var.project_name
   environment = var.environment
