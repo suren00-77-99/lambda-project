@@ -1,0 +1,507 @@
+# 🚀 AWS Serverless Employee CRUD API using Terraform
+
+![AWS](https://img.shields.io/badge/AWS-Serverless-orange)
+![Terraform](https://img.shields.io/badge/Terraform-IaC-purple)
+![Python](https://img.shields.io/badge/Python-3.12-blue)
+![Jenkins](https://img.shields.io/badge/Jenkins-CI%2FCD-red)
+![API Gateway](https://img.shields.io/badge/API-Gateway-green)
+![DynamoDB](https://img.shields.io/badge/DynamoDB-NoSQL-blue)
+
+## 📖 Overview
+
+This project demonstrates how to build a **production-style serverless REST API** on AWS using **Terraform** and **Python**.
+
+The infrastructure is completely automated using **Infrastructure as Code (IaC)**, while the deployment process is automated using **Jenkins CI/CD**.
+
+The application allows users to perform CRUD (Create, Read, Update, Delete) operations on employee records stored in **Amazon DynamoDB**.
+
+---
+
+# 🏗 Architecture
+
+```
+                  GitHub
+                     │
+                     ▼
+               Jenkins Pipeline
+                     │
+                     ▼
+              Terraform Deploy
+                     │
+                     ▼
+              Amazon API Gateway
+                     │
+                     ▼
+               AWS Lambda (Python)
+                     │
+                     ▼
+               Amazon DynamoDB
+                     │
+         ┌───────────┴────────────┐
+         ▼                        ▼
+   CloudWatch Logs           SNS Alerts
+```
+
+---
+
+# 🚀 Features
+
+- Infrastructure as Code using Terraform
+- Modular Terraform Design
+- AWS Lambda (Python)
+- HTTP API Gateway
+- DynamoDB Database
+- IAM Least Privilege Access
+- CloudWatch Monitoring
+- SNS Email Notifications
+- Jenkins CI/CD Pipeline
+- Manual Approval before Production Deployment
+- Terraform Destroy Pipeline
+
+---
+
+# 📂 Repository Structure
+
+```
+lambda-project/
+
+├── Terraform/
+│   ├── backend.tf
+│   ├── provider.tf
+│   ├── versions.tf
+│   ├── variables.tf
+│   ├── outputs.tf
+│   ├── terraform.tfvars
+│   ├── main.tf
+│   └── modules/
+│       ├── aws-api-gateway/
+│       ├── aws-cloudwatch/
+│       ├── aws-dynamodb/
+│       ├── aws-iam/
+│       ├── aws-lambda/
+│       └── aws-sns/
+│
+├── lambda/
+│   ├── app.py
+│   └── lambda.zip
+│
+├── Jenkinsfile
+│
+├── Jenkins-destroy-ci/
+│   └── Jenkinsfile
+│
+└── README.md
+```
+
+---
+
+# ☁ AWS Services Used
+
+| Service | Purpose |
+|----------|----------|
+| API Gateway | REST API |
+| Lambda | Business Logic |
+| DynamoDB | NoSQL Database |
+| IAM | Security |
+| CloudWatch | Logging & Monitoring |
+| SNS | Email Notifications |
+| Terraform | Infrastructure Provisioning |
+| Jenkins | CI/CD |
+
+---
+
+# 🌐 API Endpoints
+
+## Get All Employees
+
+```
+GET /employee
+```
+
+---
+
+## Get Employee By ID
+
+```
+GET /employee/{id}
+```
+
+---
+
+## Create Employee
+
+```
+POST /employee
+```
+
+Example
+
+```json
+{
+  "EmployeeID":"101",
+  "Name":"Suren",
+  "Role":"DevOps Engineer"
+}
+```
+
+---
+
+## Update Employee
+
+```
+PUT /employee/{id}
+```
+
+---
+
+## Delete Employee
+
+```
+DELETE /employee/{id}
+```
+
+---
+
+# 🖥 Prerequisites
+
+- AWS Account
+- IAM User with Programmatic Access
+- AWS CLI
+- Terraform
+- Python 3
+- Jenkins
+- Git
+
+---
+
+# ⚙ Deployment Steps
+
+## Clone Repository
+
+```bash
+git clone https://github.com/suren00-77-99/lambda-project.git
+
+cd lambda-project
+```
+
+---
+
+## Configure AWS
+
+```bash
+aws configure
+```
+
+---
+
+## Initialize Terraform
+
+```bash
+cd Terraform
+
+terraform init
+```
+
+---
+
+## Validate
+
+```bash
+terraform validate
+```
+
+---
+
+## Plan
+
+```bash
+terraform plan
+```
+
+---
+
+## Deploy
+
+```bash
+terraform apply
+```
+
+---
+
+## Destroy Infrastructure
+
+```bash
+terraform destroy
+```
+
+---
+
+# 🔄 Jenkins CI/CD Workflow
+
+The deployment pipeline performs the following stages:
+
+- Checkout Source Code
+- Terraform Init
+- Terraform Format
+- Terraform Validate
+- Terraform Plan
+- Manual Approval
+- Terraform Apply
+- Package Lambda
+- Archive Artifacts
+
+A separate Jenkins pipeline is provided to safely destroy the infrastructure after manual approval.
+
+---
+
+# 📊 Monitoring
+
+CloudWatch is configured to collect:
+
+- Lambda execution logs
+- API Gateway logs
+- Lambda error metrics
+
+SNS is used to send email notifications when CloudWatch alarms are triggered.
+
+---
+
+# 🔐 IAM Security
+
+The Lambda execution role follows the **Principle of Least Privilege** and has permissions only for:
+
+- DynamoDB
+- CloudWatch Logs
+- SNS Publish
+
+---
+
+# 📸 Sample Response
+
+```
+GET /employee
+```
+
+```json
+[
+  {
+    "EmployeeID": "101",
+    "Name": "Suren",
+    "Role": "DevOps Engineer"
+  }
+]
+```
+
+If no records exist in DynamoDB, the API returns:
+
+```json
+[]
+```
+
+---
+
+# 🚀 CI/CD Pipeline
+
+```
+Developer
+
+     │
+
+     ▼
+
+GitHub Repository
+
+     │
+
+     ▼
+
+Jenkins
+
+     │
+
+     ▼
+
+Terraform Init
+
+     │
+
+     ▼
+
+Terraform Validate
+
+     │
+
+     ▼
+
+Terraform Plan
+
+     │
+
+     ▼
+
+Manual Approval
+
+     │
+
+     ▼
+
+Terraform Apply
+
+     │
+
+     ▼
+
+AWS Infrastructure
+
+     │
+
+     ▼
+
+API Gateway
+
+     │
+
+     ▼
+
+Lambda
+
+     │
+
+     ▼
+
+DynamoDB
+```
+
+---
+
+# 🛠 Troubleshooting
+
+## Error
+
+```
+{"message":"Not Found"}
+```
+
+### Cause
+
+The API Gateway route was not called correctly.
+
+### Solution
+
+Use the correct endpoint:
+
+```
+https://<api-id>.execute-api.<region>.amazonaws.com/employee
+```
+
+---
+
+## Error
+
+```
+pytest: command not found
+```
+
+### Cause
+
+Pytest was not installed on the Jenkins server.
+
+### Solution
+
+Install pytest or remove the testing stage if no unit tests are available.
+
+---
+
+## Error
+
+```
+No valid credential sources found
+```
+
+### Cause
+
+AWS CLI credentials were not configured.
+
+### Solution
+
+```bash
+aws configure
+```
+
+---
+
+## Error
+
+```
+Unable to find Jenkins-destroy-ci/Jenkinsfile
+```
+
+### Cause
+
+The Jenkins Script Path did not match the repository structure.
+
+### Solution
+
+Ensure the pipeline Script Path is:
+
+```
+Jenkins-destroy-ci/Jenkinsfile
+```
+
+---
+
+# 📚 What I Learned
+
+- Infrastructure as Code using Terraform
+- AWS Serverless Architecture
+- API Gateway Integration
+- Lambda CRUD Operations
+- DynamoDB Integration
+- IAM Best Practices
+- CloudWatch Monitoring
+- SNS Alerting
+- Jenkins CI/CD
+- Terraform Modules
+- Infrastructure Troubleshooting
+- Production Deployment Workflow
+
+---
+
+# 🚀 Future Improvements
+
+- GitHub Actions
+- Docker Support
+- Kubernetes Deployment
+- Amazon Cognito Authentication
+- AWS WAF
+- Multi-Environment Deployment (Dev / QA / Prod)
+- SonarQube Integration
+- Trivy Security Scan
+- Checkov Terraform Scan
+- Terraform Cloud
+
+---
+
+# 👨‍💻 Author
+
+**Suren Raj**
+
+AWS DevOps Engineer
+
+GitHub
+
+https://github.com/suren00-77-99/lambda-project
+
+---
+
+# ⭐ Support
+
+If you found this project useful, please consider giving it a ⭐ on GitHub.
+
+Feedback and contributions are always welcome.
+
+---
+
+# 📜 License
+
+This project is released under the MIT License.
