@@ -19,3 +19,8 @@ variable "lambda_function_name" {
 variable "lambda_source_path" {
   type = string
 }
+variable "email_address" {
+
+  type = string
+
+}

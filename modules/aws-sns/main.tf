@@ -8,3 +8,11 @@ resource "aws_sns_topic_subscription" "email" {
   endpoint = var.email_address
 
 }
+module "sns" {
+
+  source = "./modules/sns"
+  project_name = var.project_name
+  environment = var.environment
+  email_address = var.email_address
+
+}
