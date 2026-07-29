@@ -13,3 +13,13 @@ variable "lambda_role_arn" {
 variable "dynamodb_table_name" {
   type = string
 }
+
+variable "lambda_function_name" {}
+
+variable "runtime" {}
+
+variable "handler" {}
+
+variable "table_name" {}
+
+variable "source_path" {}

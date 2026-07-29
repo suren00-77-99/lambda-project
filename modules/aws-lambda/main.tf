@@ -1,22 +1,31 @@
-data "archive_file" "this" {
+data "archive_file" "lambda_zip" {
   type = "zip"
-  source_dir = "${path.root}/lambda-code"
-  output_path = "${path.root}/lambda-code/blog.zip"
+  source_dir = var.source_path
+  output_path = "${path.module}/lambda.zip"
+}
+
+resource "aws_cloudwatch_log_group" "lambda_logs" {
+  name = "/aws/lambda/${var.lambda_function_name}"
+  retention_in_days = 30
 
 }
 
-resource "aws_lambda_function" "this" {
-  function_name = "${var.project_name}-${var.environment}-blog"
+resource "aws_lambda_function" "employee_api" {
+  function_name = var.lambda_function_name
+  role = var.lambda_role_arn
+  runtime = var.runtime
+  handler = var.handler
   filename = data.archive_file.lambda_zip.output_path
   source_code_hash = data.archive_file.lambda_zip.output_base64sha256
-  handler = "app.lambda_handler"
-  runtime = "python3.12"
-  role = var.lambda_role_arn
   timeout = 30
-  memory_size = 256
+  memory_size = 512
   environment {
     variables = {
-      TABLE_NAME = var.dynamodb_table_name
+      TABLE_NAME = var.table_name
+      ENVIRONMENT = var.environment
     }
   }
+  depends_on = [
+    aws_cloudwatch_log_group.lambda_logs
+  ]
 }

@@ -51,7 +51,7 @@ resource "aws_iam_policy" "dynamodb" {
           "dynamodb:Scan",
           "dynamodb:Query"
         ]
-        Resource = "*"
+        Resource = var.dynamodb_table_arn
       }
     ]
   })

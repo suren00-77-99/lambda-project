@@ -1,5 +1,5 @@
 resource "aws_dynamodb_table" "this" {
-  name         = var.table_name
+  name         = var.project_name
   billing_mode = var.billing_mode
   hash_key     = var.hash_key
 
@@ -9,7 +9,7 @@ resource "aws_dynamodb_table" "this" {
   }
 
   tags = {
-    Name        = var.table_name
+    Name        = "${var.project_name}-employee"
     Environment = var.environment
   }
 }

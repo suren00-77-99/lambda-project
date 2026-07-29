@@ -1,16 +1,15 @@
-variable "api_name" {
+variable "project_name" {
   type = string
 }
 
-variable "protocol_type" {
-  type    = string
-}
-
-variable "description" {
-  type    = string
-  default = "HTTP API created using Terraform"
-}
-
 variable "environment" {
-  type    = string
+  type = string
+}
+
+variable "lambda_function_name" {
+  type = string
+}
+
+variable "lambda_invoke_arn" {
+  type = string
 }

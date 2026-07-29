@@ -1,10 +1,9 @@
-variable "table_name" {
+variable "project_name" {
   type = string
 }
 
 variable "billing_mode" {
-  type    = string
-  #default = "PAY_PER_REQUEST"
+  type = string
 }
 
 variable "hash_key" {
@@ -12,11 +11,9 @@ variable "hash_key" {
 }
 
 variable "hash_key_type" {
-  type    = string
-  #default = "S"
+  type = string
 }
 
 variable "environment" {
-  type    = string
-  #default = "dev"
+  type = string
 }
