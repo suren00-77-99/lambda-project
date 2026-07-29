@@ -16,5 +16,5 @@ output "invoke_arn" {
 
 }
 output "table_name" {
-  value = aws_dynamodb_table.employee.name
+  value = aws_dynamodb_table.employee_api.name
 }

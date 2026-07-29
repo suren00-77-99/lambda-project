@@ -18,19 +18,14 @@ module "iam" {
 
 module "lambda" {
   source = "./modules/aws-lambda"
-
   project_name         = var.project_name
   environment          = var.environment
-
   lambda_function_name = var.lambda_function_name
   runtime              = var.lambda_runtime
   handler              = var.lambda_handler
-
   lambda_role_arn      = module.iam.lambda_role_arn
-
   # Required by the lambda module
   dynamodb_table_name  = module.dynamodb.table_name
-
   source_path          = "../lambda"
 }
 
