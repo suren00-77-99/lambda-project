@@ -1,0 +1,7 @@
+project_name = "employee-api"
+environment = "dev"
+aws_region = "ap-south-1"
+lambda_runtime = "python3.12"
+lambda_handler = "app.lambda_handler"
+lambda_function_name = "employee-api"
+lambda_source_path = "../lambda"
