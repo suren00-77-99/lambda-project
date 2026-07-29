@@ -1,4 +1,4 @@
-module "dynamodb" {
+module "dynomodb" {
   source = "./modules/dynomodb"
   project_name = "employee-db"
   billing_mode = "PAY_PER_REQUEST"
