@@ -6,8 +6,8 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main',
-                url: 'https://github.com/YOUR_USERNAME/aws-serverless-employee-api.git'
+                git branch: 'master',
+                url: 'https://github.com/suren00-77-99/lambda-project.git'
             }
         }
 
